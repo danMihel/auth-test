@@ -8,11 +8,19 @@ export default createStore({
     getProfile: false,
     IMEI: '',
     TK: '',
-    id_login: '',    
+    id_login: '',
+    id_document: '',
+    doc_type: '',
    
   },
   getters: {},
   mutations: {
+    setIdDocument(state, data){
+      state.id_document = data
+    },
+    setDoctype(state, data){
+      state.doc_type = data
+    },
     setIMEI(state) {
       state.IMEI = MD5(navigator.userAgent).toString()
     },
