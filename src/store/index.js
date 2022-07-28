@@ -4,6 +4,7 @@ import MD5 from "crypto-js/md5";
 
 export default createStore({
   state: {
+    userData: [],
     logied: false,
     getProfile: false,
     IMEI: '',
@@ -15,6 +16,9 @@ export default createStore({
   },
   getters: {},
   mutations: {
+    setUserData(state,data){
+      state.userData = data
+    },
     setIdDocument(state, data){
       state.id_document = data
     },

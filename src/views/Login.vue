@@ -76,8 +76,9 @@ export default {
                 },
               },
             })
-            .then((res) => {
-              console.log(res.data.body, "2");
+            .then((res) => { 
+             this.$store.commit("setUserData", res.data.body),
+              console.log(this.$store.state.userData[0].doc_type);
               axios
                 .get("https://host1.medsafe.tech:40443/api/test", {
                   responseType: "json",
@@ -89,8 +90,8 @@ export default {
                       IMEI: this.$store.state.IMEI,
                       Name_app: "connect",
                       Name_event: "get_pic_path",
-                      id_document: res.data.body[0].id_document,
-                      doc_type: res.data.body[0].doc_type,
+                      id_document: this.$store.state.userData[2].id_document,
+                      doc_type: this.$store.state.userData[2].doc_type,
                     },
                   },
                 })
