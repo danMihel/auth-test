@@ -1,39 +1,13 @@
 import { createStore } from "vuex";
 import axios from "axios";
-import MD5 from "crypto-js/md5";
+import { AuthModule } from "./modules/AuthModule";
 
-export default createStore({
+export default createStore({ 
   state: {
-    userData: [],
-    logied: false,
-    getProfile: false,
-    IMEI: '',
-    TK: '',
-    id_login: '',
-    id_document: '',
-    doc_type: '',
-   
+      
   },
   getters: {},
   mutations: {
-    setUserData(state,data){
-      state.userData = data
-    },
-    setIdDocument(state, data){
-      state.id_document = data
-    },
-    setDoctype(state, data){
-      state.doc_type = data
-    },
-    setIMEI(state) {
-      state.IMEI = MD5(navigator.userAgent).toString()
-    },
-    setIdLogin(state,str) {
-      state.id_login = str
-    },
-    setTK(state,str) {
-      state.TK = str
-    },
    
   },
   actions: {
@@ -61,5 +35,7 @@ export default createStore({
         })
     },
   },
-  modules: {},
+  modules: {
+    AuthModule
+  },
 });

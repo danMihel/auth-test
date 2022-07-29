@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.logied === true" class="user-profile">
+  <div v-if="this.$store.state.AuthModule.logged === true" class="user-profile">
     <div v-if="$store.state.getProfile === true">
       <h2>Профиль</h2>
       <div class="user-profile__data">
