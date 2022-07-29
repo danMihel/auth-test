@@ -2,31 +2,36 @@
   <div v-if="this.$store.state.AuthModule.isLoade === true">
     <div class="user-profile__data">
       <div class="product" v-for="item in this.$store.state.AuthModule.userData" :key="item.id_document">
-        <Card :card="item" :key="item.doc_name"/>
+        <Card :card="item" :key="item.doc_name"  @download='onDownload'/>
       </div>
-    
     </div>
-    <LogoutBtn />
   </div>
   <div v-else class="user-profile__spinner"></div>
 </template>
 <script>
-import LogoutBtn from "@/components/LogoutBtn.vue";
 import Card from "../components/Card.vue";
 export default {
   name: "User",
-  data(){
+  data() {
     return {
-     
+
     }
   },
-
-  components: {
-    LogoutBtn,
-    Card
+  methods: {
+  onDownload (data) {
+    console.log('child component said login',  data.type)
+     this.$store.dispatch('AuthModule/onDoc', [data.document, data.type])
+  }
 },
+  components: {
+    Card
+  },
   mounted() {
-    this.$store.dispatch("AuthModule/onProfile");
+    this.$store.dispatch("AuthModule/onProfile").then(() => {
+      if (!localStorage.userData) {
+        localStorage.userData = JSON.stringify(this.$store.state.AuthModule.userData)
+      }
+    }).then(() => this.$store.commit("AuthModule/setUserData", JSON.parse(localStorage.userData)));
   },
 };
 </script>

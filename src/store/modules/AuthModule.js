@@ -20,16 +20,6 @@ export const AuthModule = {
       doc_type: "",
     };
   },
-
-  getters: {
-    getUserData: (state) => state.userData,
-    getIMEI: (state) => state.IMEI,
-    getTK: (state) => state.TK,
-    getIdLogin: (state) => state.id_login,
-    getIdDocument: (state) => state.id_document,
-    getDocType: (state) => state.doc_type,
-  },
-
   mutations: {
     setUserData(state, userData) {
       state.userData = userData;
@@ -46,23 +36,22 @@ export const AuthModule = {
     setLogged(state, bool) {
       state.logged = bool;
     },
-    setUserData(state, userData) {
-      state.userData = userData;
-    },
     setIdDocument(state, id_document) {
       state.id_document = id_document;
     },
     setDoctype(state, doc_type) {
       state.doc_type = doc_type;
     },
-    setIMEI(state) {
-      state.IMEI = MD5(navigator.userAgent).toString();
+    setIMEI() {
+     localStorage.IMEI = MD5(navigator.userAgent).toString();
     },
     setIdLogin(state, id_login) {
       state.id_login = id_login;
+      localStorage.id_login = id_login;
     },
     setTK(state, TK) {
       state.TK = TK;
+      localStorage.TK = TK
     },
   },
 
@@ -72,15 +61,15 @@ export const AuthModule = {
       return AuthAPI.login({
         login: this.state.AuthModule.login,
         password: this.state.AuthModule.password,
-        IMEI: this.state.AuthModule.IMEI,
+        IMEI: localStorage.IMEI,
         Name_app: "connect",
       })
         .then((res) => {
+          console.log(res.data[0].id_login)
           commit("setIdLogin", res.data[0].id_login),
             commit("setTK", res.data[0].TK),
             commit("setLogged", true);
           commit("setSpinner", true);
-          console.log(res);
         })
         .then(() => {
           this.state.AuthModule.id_login != 0
@@ -94,13 +83,29 @@ export const AuthModule = {
         id_login: this.state.AuthModule.id_login,
         id_people: this.state.AuthModule.id_login,
         TK: this.state.AuthModule.TK,
-        IMEI: this.state.AuthModule.IMEI,
+        IMEI: localStorage.IMEI,
         Name_app: "connect",
         Name_event: "list_load",
       }).then((res) => {
+        console.log('profie', res)
         commit("setUserData", res.data.body);
-        commit("setSpinner", true);
-        
+        commit("setSpinner", true); 
+      });
+    },
+    async onDoc({ commit }, [doc, type]) {
+      commit("setSpinner", false);
+      return AuthAPI.profile({
+        id_login: localStorage.id_login,
+        id_people: localStorage.id_login,
+        TK: localStorage.TK,
+        IMEI: localStorage.IMEI,
+        Name_app: "connect",
+        Name_event: "get_pic_path",
+        id_document: doc,
+        doc_type: type,
+      }).then((res) => {
+        alert(res.data.body[0].hash)
+        commit("setSpinner", true); 
       });
     },
   },
