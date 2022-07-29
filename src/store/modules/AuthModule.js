@@ -9,8 +9,9 @@ export const AuthModule = {
   state() {
     return {
       logged: false,
-      login: "803286",
-      password: "NH2Pepn",
+      isLoade: true,
+      login: "",
+      password: "",
       userData: [],
       IMEI: "",
       TK: "",
@@ -30,8 +31,20 @@ export const AuthModule = {
   },
 
   mutations: {
-    setLogged(state, bool){
-      state.logged = bool
+    setUserData(state, userData) {
+      state.userData = userData;
+    },
+    setSpinner(state, bool) {
+      state.isLoade = bool;
+    },
+    setLogin(state, login) {
+      state.login = login;
+    },
+    setPassword(state, password) {
+      state.password = password;
+    },
+    setLogged(state, bool) {
+      state.logged = bool;
     },
     setUserData(state, userData) {
       state.userData = userData;
@@ -55,6 +68,7 @@ export const AuthModule = {
 
   actions: {
     async onLogin({ commit }) {
+      commit("setSpinner", false);
       return AuthAPI.login({
         login: this.state.AuthModule.login,
         password: this.state.AuthModule.password,
@@ -64,14 +78,30 @@ export const AuthModule = {
         .then((res) => {
           commit("setIdLogin", res.data[0].id_login),
             commit("setTK", res.data[0].TK),
-            commit( "setLogged", true)
-            console.log(res);
+            commit("setLogged", true);
+          commit("setSpinner", true);
+          console.log(res);
         })
         .then(() => {
-          this.state.AuthModule.IMEI != 0
+          this.state.AuthModule.id_login != 0
             ? router.push("/user")
             : alert("Что-то пошло не так");
         });
+    },
+    async onProfile({ commit }) {
+      commit("setSpinner", false);
+      return AuthAPI.profile({
+        id_login: this.state.AuthModule.id_login,
+        id_people: this.state.AuthModule.id_login,
+        TK: this.state.AuthModule.TK,
+        IMEI: this.state.AuthModule.IMEI,
+        Name_app: "connect",
+        Name_event: "list_load",
+      }).then((res) => {
+        commit("setUserData", res.data.body);
+        commit("setSpinner", true);
+        
+      });
     },
   },
 };

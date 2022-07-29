@@ -1,36 +1,34 @@
 <template>
-  <div v-if="this.$store.state.AuthModule.logged === true" class="user-profile">
-    <div v-if="$store.state.getProfile === true">
-      <h2>Профиль</h2>
-      <div class="user-profile__data">
-        <p> <strong>Пользователь:</strong> {{ $store.state.userName }}</p>
-        <p> <strong>Имя:</strong> {{ $store.state.firstName }}</p>
-        <p> <strong>Фамилия:</strong> {{ $store.state.lastName }}</p>
+  <div v-if="this.$store.state.AuthModule.isLoade === true">
+    <div class="user-profile__data">
+      <div class="product" v-for="item in this.$store.state.AuthModule.userData" :key="item.id_document">
+        <Card :card="item" :key="item.doc_name"/>
       </div>
-      <LogoutBtn />
+    
     </div>
-    <div v-else-if="$store.state.error">
-      <p>{{ $store.state.error }}</p>
-      <LogoutBtn />
-    </div>
-    <div v-else class="user-profile__spinner"></div>
+    <LogoutBtn />
   </div>
-  <div v-else>
-    <h2> Для просмотра необходимо авторизироваться</h2>
-  </div>
+  <div v-else class="user-profile__spinner"></div>
 </template>
 <script>
-import LogoutBtn from '@/components/LogoutBtn.vue';
+import LogoutBtn from "@/components/LogoutBtn.vue";
+import Card from "../components/Card.vue";
 export default {
-  name: 'User',
+  name: "User",
+  data(){
+    return {
+     
+    }
+  },
+
   components: {
-    LogoutBtn
-  },
+    LogoutBtn,
+    Card
+},
   mounted() {
-    console.log(this.$store.state.logied)
-    this.$store.state.logied === true ? this.$store.dispatch('getUser') : null;
+    this.$store.dispatch("AuthModule/onProfile");
   },
-}
+};
 </script>
 <style>
 .user-profile {

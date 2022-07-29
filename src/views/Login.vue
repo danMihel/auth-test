@@ -22,7 +22,7 @@
       </div>
       <div class="auth-card__aller">{{ nonFieldErrors }}</div>
       <button class="auth-card__button">
-        <span v-if="isLoade === true">Войти</span>
+        <span v-if="this.$store.state.AuthModule.isLoade === true">Войти</span>
         <div v-else class="auth-card__spinner"></div>
       </button>
     </form>
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import MD5 from "crypto-js/md5";
 
 export default {
   name: "login",
@@ -43,19 +42,20 @@ export default {
       passwordError: "",
       nonFieldErrors: "",
       error: "",
-      isLoade: true,
       IMEI: "",
-      
+      isLoade: true,
     };
   },
   methods: {
     async onSubmit() {
-      this.$store.dispatch("AuthModule/onLogin");      
+      this.$store.commit("AuthModule/setLogin", this.login);
+      this.$store.commit("AuthModule/setPassword", this.password);
+      this.$store.dispatch("AuthModule/onLogin");
     },
   },
   mounted() {
-    this.$store.state.AuthModule.IMEI = MD5(navigator.userAgent).toString();
-    console.log(this.$store.state.AuthModule.IMEI);
+    this.$store.commit('AuthModule/setIMEI')
+    
   },
 };
 </script>
