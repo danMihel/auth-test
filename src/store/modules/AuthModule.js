@@ -105,7 +105,7 @@ export const AuthModule = {
         doc_type: type,
       }).then((res) => {
         console.log(res)
-        console.log(res.data.body)
+        console.log(res.data.body, "Download")
         commit("setSpinner", true);
       });
     },
