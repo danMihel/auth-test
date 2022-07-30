@@ -43,11 +43,10 @@ export const AuthModule = {
       state.doc_type = doc_type;
     },
     setIMEI() {
-     localStorage.IMEI = MD5(navigator.userAgent).toString();
+      localStorage.IMEI = MD5(navigator.userAgent).toString();
     },
     setIdLogin(state, id_login) {
       state.id_login = id_login;
-      localStorage.id_login = id_login;
     },
     setTK(state, TK) {
       state.TK = TK;
@@ -65,16 +64,18 @@ export const AuthModule = {
         Name_app: "connect",
       })
         .then((res) => {
-          console.log(res.data[0].id_login)
-          commit("setIdLogin", res.data[0].id_login),
-            commit("setTK", res.data[0].TK),
+          console.log(res.data)
+          commit("setIdLogin", res.data[0].id_login);
+          if (this.state.AuthModule.id_login != 0) {
+            localStorage.id_login = this.state.AuthModule.id_login
+            commit("setTK", res.data[0].TK);
             commit("setLogged", true);
+            commit("setSpinner", true);
+            router.push("/user")
+          } else{
+            alert("Неверные логин или пароль");
           commit("setSpinner", true);
-        })
-        .then(() => {
-          this.state.AuthModule.id_login != 0
-            ? router.push("/user")
-            : alert("Что-то пошло не так");
+          } 
         });
     },
     async onProfile({ commit }) {
@@ -87,9 +88,8 @@ export const AuthModule = {
         Name_app: "connect",
         Name_event: "list_load",
       }).then((res) => {
-        console.log('profie', res)
         commit("setUserData", res.data.body);
-        commit("setSpinner", true); 
+        commit("setSpinner", true);
       });
     },
     async onDoc({ commit }, [doc, type]) {
@@ -104,8 +104,9 @@ export const AuthModule = {
         id_document: doc,
         doc_type: type,
       }).then((res) => {
-        alert(res.data.body[0].hash)
-        commit("setSpinner", true); 
+        console.log(res)
+        console.log(res.data.body)
+        commit("setSpinner", true);
       });
     },
   },

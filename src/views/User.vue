@@ -19,7 +19,6 @@ export default {
   },
   methods: {
   onDownload (data) {
-    console.log('child component said login',  data.type)
      this.$store.dispatch('AuthModule/onDoc', [data.document, data.type])
   }
 },
