@@ -8,7 +8,6 @@
 <script>
 export default {
   name: "card",
-
   methods: {
     download() {
       this.$emit("download", {
