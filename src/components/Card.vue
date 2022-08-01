@@ -29,7 +29,7 @@ export default {
 .card-container {
   padding-top: 30px;
   padding-bottom: 30px;
- 
+  cursor: pointer;
 }
 .doc__title {
   font-weight: 600;
