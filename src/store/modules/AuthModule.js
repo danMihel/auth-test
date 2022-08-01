@@ -1,7 +1,5 @@
 import { AuthAPI } from "@/API/AuthAPI";
-
 import router from "@/router";
-
 import MD5 from "crypto-js/md5";
 
 export const AuthModule = {
@@ -19,12 +17,12 @@ export const AuthModule = {
       id_login: "",
       id_document: "",
       doc_type: "",
-      errors: ''
+      errors: "",
     };
   },
   mutations: {
-    setError(state, error){
-      state.errors = error
+    setError(state, error) {
+      state.errors = error;
     },
     setUserData(state, userData) {
       state.userData = userData;
@@ -40,7 +38,7 @@ export const AuthModule = {
     },
     setLogged(state, bool) {
       state.logged = bool;
-      localStorage.logged = bool
+      localStorage.logged = bool;
     },
     setIdDocument(state, id_document) {
       state.id_document = id_document;
@@ -56,13 +54,15 @@ export const AuthModule = {
     },
     setTK(state, TK) {
       state.TK = TK;
-      localStorage.TK = TK
+      localStorage.TK = TK;
     },
   },
 
   actions: {
-    LoginCheck(){
-      this.state.AuthModule.logged === true || localStorage.logged =="true" ? router.push("/user") : null
+    LoginCheck() {
+      this.state.AuthModule.logged === true || localStorage.logged == "true"
+        ? router.push("/user")
+        : null;
     },
 
     async onLogin({ commit }) {
@@ -76,19 +76,19 @@ export const AuthModule = {
         .then((res) => {
           commit("setIdLogin", res.data[0].id_login);
           if (this.state.AuthModule.id_login != 0) {
-            localStorage.id_login = this.state.AuthModule.id_login
+            localStorage.id_login = this.state.AuthModule.id_login;
             commit("setTK", res.data[0].TK);
             commit("setLogged", true);
             commit("setSpinner", true);
-            commit('setError', "");
-            router.push("/user")
-          } else{
-            this.state.AuthModule.errors ="Неверные логин или пароль";
-          commit("setSpinner", true);
-          } 
-        }).catch((error) => {
-          AuthAPI.errorHandler(error.response.status)
-         
+            commit("setError", "");
+            router.push("/user");
+          } else {
+            this.state.AuthModule.errors = "Неверные логин или пароль";
+            commit("setSpinner", true);
+          }
+        })
+        .catch((error) => {
+          AuthAPI.errorHandler(error.response.status);
         })
         .finally(() => {
           commit("setSpinner", true);
@@ -103,16 +103,18 @@ export const AuthModule = {
         IMEI: localStorage.IMEI,
         Name_app: "connect",
         Name_event: "list_load",
-      }).then((res) => {
-        commit("setUserData", res.data.body);
-        commit("setSpinner", true);
-        commit('setError', "");
-      }).catch((error) => {
-        AuthAPI.errorHandler(error.response.status)
       })
-      .finally(() => {
-        commit("setSpinner", true);
-      });
+        .then((res) => {
+          commit("setUserData", res.data.body);
+          commit("setSpinner", true);
+          commit("setError", "");
+        })
+        .catch((error) => {
+          AuthAPI.errorHandler(error.response.status);
+        })
+        .finally(() => {
+          commit("setSpinner", true);
+        });
     },
     async onDoc({ commit }, [doc, type]) {
       commit("setSpinner", false);
@@ -125,16 +127,18 @@ export const AuthModule = {
         Name_event: "get_pic_path",
         id_document: doc,
         doc_type: type,
-      }).then((res) => {
-        alert(res.data.body[0].hash)
-        commit('setError', "");
-        commit("setSpinner", true);
-      }).catch((error) => {
-        AuthAPI.errorHandler(error.response.status)
       })
-      .finally(() => {
-        commit("setSpinner", true);
-      });
+        .then((res) => {
+          alert(res.data.body[0].hash);
+          commit("setError", "");
+          commit("setSpinner", true);
+        })
+        .catch((error) => {
+          AuthAPI.errorHandler(error.response.status);
+        })
+        .finally(() => {
+          commit("setSpinner", true);
+        });
     },
   },
 };

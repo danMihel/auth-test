@@ -8,7 +8,6 @@ const routes = [
     path: '/',
     name: 'login',
     component: Login
-    
   },
   {
     path: '/user',
