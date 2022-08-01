@@ -1,8 +1,10 @@
 <template>
   <div @click="download" class="card-container">
-    <span class="doc__title"> {{ card.doc_name }} </span>
-    <span> от </span>
-    <span class="doc__cont"> {{ card.date_doc }} </span>
+    <span class="pointer">
+      <span class="doc__title"> {{ card.doc_name }} </span>
+      <span> от </span>
+      <span class="doc__cont"> {{ card.date_doc }} </span>
+    </span>
   </div>
 </template>
 <script>
@@ -29,9 +31,11 @@ export default {
 .card-container {
   padding-top: 30px;
   padding-bottom: 30px;
-  cursor: pointer;
 }
 .doc__title {
   font-weight: 600;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>
