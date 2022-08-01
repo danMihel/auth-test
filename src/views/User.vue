@@ -10,6 +10,7 @@
           <span>Ваш логин: {{ this.id_login }}</span>
         </div>
         <div class="user-profile user-profile__data">
+          <h2 class="user-profile__title">Ваши документы</h2>
           <div
             class="document"
             v-for="item in this.$store.state.AuthModule.userData"
@@ -110,6 +111,10 @@ export default {
 }
 
 .document:not(:last-child) {
-    border-bottom: 1px #C4C4C4 solid;
+  border-bottom: 1px #c4c4c4 solid;
+}
+
+.user-profile__title {
+  text-align: center;
 }
 </style>
