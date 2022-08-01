@@ -22,7 +22,7 @@
     </div>
     <div v-else class="user-profile__spinner"></div>
   </div>
-  <div v-else>доступ запрещен</div>
+  <div v-else>Доступ запрещен</div>
 </template>
 <script>
 import Card from "@/components/Card.vue";
