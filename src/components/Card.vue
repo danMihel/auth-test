@@ -1,9 +1,9 @@
 <template>
-  <p @click='download' class="card-container">
-    <span class="product__title">{{ card.date_doc }} </span>
-    <span class="product__cont"> {{ card.doc_name }} </span>
-    <span class="product__art"> .{{ card.file_ext }}</span>
-  </p>
+  <div @click='download' class="card-container">
+    <span class="doc__cont"> {{ card.date_doc }} </span>
+    &nbsp;
+    <span class="doc__title"> {{ card.doc_name }} </span>
+  </div>
 </template>
 <script>
 export default {
@@ -27,7 +27,10 @@ export default {
 </script>
 
 <style>
-.card-container {
-  text-align: center;
+.card-container{
+  margin-bottom: 8px;
+}
+.doc__title{
+  font-weight: 600;
 }
 </style>

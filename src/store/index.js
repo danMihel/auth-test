@@ -27,7 +27,6 @@ export default createStore({
           )
         )
         .catch(error => {
-          commit("setProfile", false)
           !error.response.status ? commit("setError", "Проверьте подключение к интернету") :
           error.response.status  == 404 ? commit("setError", "Ой - ошибка 404") :
           (error.response.status + '')[0] == 5 ? commit("setError", "Сервер сеичас недоступен, но скоро мы все починим") :

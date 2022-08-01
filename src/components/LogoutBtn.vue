@@ -1,5 +1,5 @@
 <template>
-    <router-link v-if="this.$store.state.logied === true" to="/">
+    <router-link  to="/">
         <button class="logout-button" @click="this.logOut()">Выйти</button>
     </router-link>
 </template>
@@ -8,24 +8,22 @@ export default {
     name: 'LogoutBtn',
     methods: {
         logOut() {
-            localStorage.removeItem("token")
-            this.$store.commit('setLogine', true)
-            console.log('token delete')
+            localStorage.clear()
+             this.$store.commit("AuthModule/setLogged", false);
         }
     }
 }
 </script>
 <style>
 .logout-button {
-    height: 46px;
-    width: 300px;
+    height: 25px;
+    width: 100px;
     border: none;
     border-radius: 5px;
     background-color: #5e79ec;
     margin-bottom: 15px;
     color: azure;
-    font-size: 1.2rem;
-
+    font-size: 1rem;
 }
 
 .logout-button:hover {

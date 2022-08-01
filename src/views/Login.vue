@@ -9,7 +9,6 @@
           type="text"
           placeholder="Логин"
         />
-        <div class="auth-card__aller">{{ usernameError }}</div>
       </div>
       <div>
         <input
@@ -18,9 +17,8 @@
           type="password"
           placeholder="Пароль"
         />
-        <div class="auth-card__aller">{{ passwordError }}</div>
       </div>
-      <div class="auth-card__aller">{{ nonFieldErrors }}</div>
+      <div class="auth-card__aller">{{this.$store.state.AuthModule.errors }}</div>
       <button class="auth-card__button">
         <span v-if="this.$store.state.AuthModule.isLoade === true">Войти</span>
         <div v-else class="auth-card__spinner"></div>
@@ -55,6 +53,7 @@ export default {
   },
   mounted() {
     this.$store.commit('AuthModule/setIMEI')
+    this.$store.dispatch('AuthModule/LoginCheck')
     
   },
 };

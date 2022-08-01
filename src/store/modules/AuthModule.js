@@ -1,4 +1,5 @@
 import { AuthAPI } from "@/API/AuthAPI";
+
 import router from "@/router";
 
 import MD5 from "crypto-js/md5";
@@ -18,9 +19,13 @@ export const AuthModule = {
       id_login: "",
       id_document: "",
       doc_type: "",
+      errors: ''
     };
   },
   mutations: {
+    setError(state, error){
+      state.errors = error
+    },
     setUserData(state, userData) {
       state.userData = userData;
     },
@@ -35,6 +40,7 @@ export const AuthModule = {
     },
     setLogged(state, bool) {
       state.logged = bool;
+      localStorage.logged = bool
     },
     setIdDocument(state, id_document) {
       state.id_document = id_document;
@@ -55,6 +61,10 @@ export const AuthModule = {
   },
 
   actions: {
+    LoginCheck(){
+      this.state.AuthModule.logged === true || localStorage.logged =="true" ? router.push("/user") : null
+    },
+
     async onLogin({ commit }) {
       commit("setSpinner", false);
       return AuthAPI.login({
@@ -64,18 +74,24 @@ export const AuthModule = {
         Name_app: "connect",
       })
         .then((res) => {
-          console.log(res.data)
           commit("setIdLogin", res.data[0].id_login);
           if (this.state.AuthModule.id_login != 0) {
             localStorage.id_login = this.state.AuthModule.id_login
             commit("setTK", res.data[0].TK);
             commit("setLogged", true);
             commit("setSpinner", true);
+            commit('setError', "");
             router.push("/user")
           } else{
-            alert("Неверные логин или пароль");
+            this.state.AuthModule.errors ="Неверные логин или пароль";
           commit("setSpinner", true);
           } 
+        }).catch((error) => {
+          AuthAPI.errorHandler(error.response.status)
+         
+        })
+        .finally(() => {
+          commit("setSpinner", true);
         });
     },
     async onProfile({ commit }) {
@@ -89,6 +105,12 @@ export const AuthModule = {
         Name_event: "list_load",
       }).then((res) => {
         commit("setUserData", res.data.body);
+        commit("setSpinner", true);
+        commit('setError', "");
+      }).catch((error) => {
+        AuthAPI.errorHandler(error.response.status)
+      })
+      .finally(() => {
         commit("setSpinner", true);
       });
     },
@@ -104,8 +126,13 @@ export const AuthModule = {
         id_document: doc,
         doc_type: type,
       }).then((res) => {
-        console.log(res)
-        console.log(res.data.body, "Download")
+        alert(res.data.body[0].hash)
+        commit('setError', "");
+        commit("setSpinner", true);
+      }).catch((error) => {
+        AuthAPI.errorHandler(error.response.status)
+      })
+      .finally(() => {
         commit("setSpinner", true);
       });
     },

@@ -5,11 +5,10 @@
   <router-view/>
 </template>
 <script>
-import LogoutBtn from './components/LogoutBtn.vue';
 
  export default {
    components:{
-    LogoutBtn
+
 }
  }
 </script>
