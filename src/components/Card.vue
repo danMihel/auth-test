@@ -1,8 +1,8 @@
 <template>
   <div @click="download" class="card-container">
-    <span class="doc__cont"> {{ card.date_doc }} </span>
-    &nbsp;
     <span class="doc__title"> {{ card.doc_name }} </span>
+    <span> от </span>
+    <span class="doc__cont"> {{ card.date_doc }} </span>
   </div>
 </template>
 <script>
