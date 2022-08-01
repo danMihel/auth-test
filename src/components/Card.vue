@@ -1,5 +1,5 @@
 <template>
-  <div @click='download' class="card-container">
+  <div @click="download" class="card-container">
     <span class="doc__cont"> {{ card.date_doc }} </span>
     &nbsp;
     <span class="doc__title"> {{ card.doc_name }} </span>
@@ -11,11 +11,11 @@ export default {
 
   methods: {
     download() {
-      this.$emit('download', {
+      this.$emit("download", {
         document: this.card.id_document,
-        type: this.card.doc_type
-      })
-    }
+        type: this.card.doc_type,
+      });
+    },
   },
   props: {
     card: {
@@ -27,10 +27,10 @@ export default {
 </script>
 
 <style>
-.card-container{
+.card-container {
   margin-bottom: 8px;
 }
-.doc__title{
+.doc__title {
   font-weight: 600;
 }
 </style>
