@@ -11,7 +11,7 @@
         </div>
         <div class="user-profile user-profile__data">
           <div
-            class="product"
+            class="document"
             v-for="item in this.$store.state.AuthModule.userData"
             :key="item.id_document"
           >
@@ -107,5 +107,9 @@ export default {
 
 .card-header__btn {
   margin: 10px;
+}
+
+.document:not(:last-child) {
+    border-bottom: 1px #C4C4C4 solid;
 }
 </style>
