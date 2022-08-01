@@ -27,7 +27,9 @@ export default {
 
 <style>
 .card-container {
-  margin-bottom: 8px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgb(170, 170, 170);
 }
 .doc__title {
   font-weight: 600;
