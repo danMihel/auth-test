@@ -18,7 +18,9 @@
           placeholder="Пароль"
         />
       </div>
-      <div class="auth-card__aller">{{this.$store.state.AuthModule.errors }}</div>
+      <div class="auth-card__aller">
+        {{ this.$store.state.AuthModule.errors }}
+      </div>
       <button class="auth-card__button">
         <span v-if="this.$store.state.AuthModule.isLoade === true">Войти</span>
         <div v-else class="auth-card__spinner"></div>
@@ -51,9 +53,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.commit('AuthModule/setIMEI')
-    this.$store.dispatch('AuthModule/LoginCheck')
-    
+    this.$store.commit("AuthModule/setIMEI");
+    this.$store.dispatch("AuthModule/LoginCheck");
   },
 };
 </script>

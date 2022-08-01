@@ -99,13 +99,13 @@ export default {
   animation: donut-spin 1.2s linear infinite;
 }
 
-.card-header{
+.card-header {
   display: flex;
-  align-items:  baseline;
+  align-items: baseline;
   flex-direction: row-reverse;
 }
 
-.card-header__btn{
+.card-header__btn {
   margin: 10px;
 }
 </style>
