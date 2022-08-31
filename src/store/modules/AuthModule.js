@@ -81,6 +81,7 @@ export const AuthModule = {
             commit("setLogged", true);
             commit("setSpinner", true);
             commit("setError", "");
+            console.log(this.state.AuthModule.logged)
             router.push("/user");
           } else {
             this.state.AuthModule.errors = "Неверные логин или пароль";

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.logged === true">
+  <div >
     <div class="" v-if="this.$store.state.AuthModule.isLoade === true">
       <div v-if="this.$store.state.AuthModule.errors != ''">
         <div>{{ this.$store.state.AuthModule.errors }}</div>
@@ -23,7 +23,6 @@
     </div>
     <div v-else class="user-profile__spinner"></div>
   </div>
-  <div v-else>Доступ запрещен</div>
 </template>
 <script>
 import Card from "@/components/Card.vue";

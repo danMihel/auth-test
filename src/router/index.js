@@ -12,13 +12,19 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: User
-  }
+    component: User,
+   },
+
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.name !== 'login' && localStorage.logged ==="false") next( {name:'login'});
+  else next()
 })
 
 export default router
